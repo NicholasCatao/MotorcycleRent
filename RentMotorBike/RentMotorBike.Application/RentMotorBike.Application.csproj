@@ -16,12 +16,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <ProjectReference Include="..\RentMotorBike.Domain\RentMotorBike.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\DeliveryMan\Command\" />
+    <Folder Include="UseCases\DeliveryMan\Queries\" />
+    <Folder Include="UseCases\Order\Command\" />
+    <Folder Include="UseCases\Order\Queries\" />
+    <Folder Include="UseCases\Rent\Command\" />
+    <Folder Include="UseCases\Rent\Queries\" />
   </ItemGroup>
 
 </Project>

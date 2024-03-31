@@ -1,37 +1,54 @@
 ﻿using Dapper.Contrib.Extensions;
 using RentMotorBike.Domain.Abstractions.Repository;
 using RentMotorBike.Domain.Common;
+using System.Data;
 
 namespace RentMotorBike.Infra.Respositories;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
 {
-    public GenericRepository()
+    private readonly IDbConnection _dbConnection;
+    private readonly IDbTransaction _dbTransaction;
+
+    public GenericRepository(IDbTransaction dbTransaction)
     {
+        _dbConnection = dbTransaction.Connection ?? default!;
+        _dbTransaction = dbTransaction;
         SqlMapperExtensions.TableNameMapper = (type) => type.Name;
     }
-    Task IGenericRepository<TEntity>.DeleteAsync(int id)
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _dbConnection.GetAllAsync<TEntity>(_dbTransaction);
     }
 
-    Task<IEnumerable<TEntity>> IGenericRepository<TEntity>.GetAllAsync()
+    public async Task<TEntity> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _dbConnection.GetAsync<TEntity>(id, _dbTransaction);
     }
 
-    Task<TEntity> IGenericRepository<TEntity>.GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        return await _dbConnection.GetAsync<TEntity>(id, _dbTransaction);
     }
 
-    Task IGenericRepository<TEntity>.InsertAsync(TEntity entity)
+
+    public async Task<int> InsertAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        entity.DateCreated = DateTime.UtcNow;
+        entity.DateUpdated = null;
+        return await _dbConnection.InsertAsync(entity, _dbTransaction);
     }
 
-    Task IGenericRepository<TEntity>.UpdateAsync(TEntity entityToUpdate)
+    public async Task UpdateAsync(TEntity entityToUpdate)
     {
-        throw new NotImplementedException();
+        entityToUpdate.DateUpdated = DateTime.UtcNow;
+        await _dbConnection.UpdateAsync<TEntity>(entityToUpdate, _dbTransaction);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var entity = await GetByIdAsync(id);
+        await _dbConnection.DeleteAsync(entity, _dbTransaction);
     }
 }

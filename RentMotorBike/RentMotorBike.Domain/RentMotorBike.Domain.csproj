@@ -12,8 +12,4 @@
     <None Remove="Request\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

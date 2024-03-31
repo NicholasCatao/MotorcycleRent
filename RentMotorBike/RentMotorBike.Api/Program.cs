@@ -4,7 +4,7 @@ using RentMotorBike.Infrastructure.CrossCutting.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<AppSettingdInjector>(builder.Configuration);
+builder.Services.Configure<AppSettingInjector>(builder.Configuration);
 
 // Add services to the container.
 

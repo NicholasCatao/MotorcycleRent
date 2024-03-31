@@ -2,7 +2,7 @@
 
 namespace RentMotorBike.Domain.Enums;
 
-public enum LicenseDriverCategory
+public enum LicenseDriverCategory : byte
 {
     [Description(" A Category")]
     A = 0,

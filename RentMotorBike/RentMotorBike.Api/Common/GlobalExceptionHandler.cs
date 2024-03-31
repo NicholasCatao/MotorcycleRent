@@ -10,12 +10,10 @@ public class GlobalExceptionHandler
 {
 
     private readonly RequestDelegate _next;
-    private readonly IOptions<JsonOptions> _jsonOptions;
 
-    public GlobalExceptionHandler(RequestDelegate next, IOptions<JsonOptions> jsonOptions)
+    public GlobalExceptionHandler(RequestDelegate next)
     {
         _next = next;
-        _jsonOptions = jsonOptions;
     }
 
     public async Task Invoke(HttpContext context, IWebHostEnvironment hostingEnvironment, ILogger<GlobalExceptionHandler> logger)
@@ -40,6 +38,6 @@ public class GlobalExceptionHandler
         await context.Response.WriteAsync(JsonSerializer.Serialize(new Notificacao()
         {
             DetalheErro = hostingEnvironment.IsProduction() ? "Ocorreu um erro interno ao processar os dados" : ex.Message
-        }, _jsonOptions.Value.JsonSerializerOptions));
+        }));
     }
 }

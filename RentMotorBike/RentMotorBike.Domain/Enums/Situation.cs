@@ -2,7 +2,7 @@
 
 namespace RentMotorBike.Domain.Enums
 {
-    public enum Situation
+    public enum Situation : byte
     {
         [Description("Avaliable")]
         AVALIABLE = 0,
