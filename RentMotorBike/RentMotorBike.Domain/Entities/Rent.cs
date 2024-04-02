@@ -1,4 +1,5 @@
 ﻿using RentMotorBike.Domain.Common;
+using RentMotorBike.Domain.Enums;
 
 namespace RentMotorBike.Domain.Entities;
 
@@ -6,6 +7,9 @@ public class Rent : BaseEntity
 {
     public DateTime InitialDate { get; set; }
     public DateTime FinallDate { get; set; }
-    public MotorBike MotorBike { get; set; }
-    public DeliveryMan DeliveryMan { get; set; }
+    public string MotorBikeId { get; set; }
+    public long RenterId { get; set; }
+    public RentPlan RentPlan { get; set; }
+    public decimal Fee { get; set; }
+
 }
