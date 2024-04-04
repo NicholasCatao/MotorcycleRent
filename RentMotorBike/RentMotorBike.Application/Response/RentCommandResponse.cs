@@ -1,6 +1,4 @@
-﻿using MediatR;
-using RentMotorBike.Application.Request;
-using RentMotorBike.Domain.Entities;
+﻿using RentMotorBike.Domain.Entities;
 using RentMotorBike.Domain.Enums;
 
 namespace RentMotorBike.Application.Response;
@@ -12,7 +10,7 @@ public record struct RentCommandResponse
     public string MotorBikeId { get; set; }
     public long RenterId { get; set; }
     public RentPlan RentPlan { get; set; }
-    public decimal Fee { get; set; }
+    public decimal? Fee { get; set; }
     public decimal Total { get; set; }
 
 

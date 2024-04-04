@@ -13,7 +13,6 @@ public sealed record RentCommandRequest : IRequest<Response<RentCommandResponse>
     public string MotorBikeId { get; set; }
     public long RenterId { get; set; }
     public RentPlan RentPlan { get; set; }
-    public decimal Fee { get; set; }
 
     public static explicit operator Rent(RentCommandRequest request)
           => new Rent
@@ -23,6 +22,5 @@ public sealed record RentCommandRequest : IRequest<Response<RentCommandResponse>
               MotorBikeId = request.MotorBikeId,
               RenterId = request.RenterId,
               RentPlan = request.RentPlan,
-              Fee = request.Fee,
           };
 }

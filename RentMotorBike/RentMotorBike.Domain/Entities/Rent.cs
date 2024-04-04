@@ -10,6 +10,6 @@ public class Rent : BaseEntity
     public string MotorBikeId { get; set; }
     public long RenterId { get; set; }
     public RentPlan RentPlan { get; set; }
+    public decimal Cost { get; set; }
     public decimal Fee { get; set; }
-
 }

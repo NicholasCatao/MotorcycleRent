@@ -22,10 +22,10 @@ public class CreateRentCommandHandler : IRequestHandler<RentCommandRequest, Resp
     public async Task<Response<RentCommandResponse>> Handle(RentCommandRequest request, CancellationToken cancellationToken)
     {
 
-
         var entity = (Rent)request;
 
-
+        entity.Cost = 0;
+        entity.Fee = 0;
 
         var uow = _unitOfWork.CreatePostgressUnitOfWork();
 

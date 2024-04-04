@@ -5,9 +5,9 @@ namespace RentMotorBike.Domain.Enums;
 public enum RentPlan
 {
     [Description("7 Days")]
-    SEVEN,
+    SEVEN = 30,
     [Description("15 Days")]
-    FIFTEEN,
+    FIFTEEN = 28,
     [Description("30 Days")]
-    THIRTY
+    THIRTY = 22
 }
