@@ -1,8 +1,8 @@
-﻿using RentMotorBike.Domain.Enums;
+﻿using RentMotorBike.Domain.Entities;
 
 namespace RentMotorBike.Domain.Abstractions.Services;
 
 public interface IRentPlanService
 {
-    Task<(decimal cost, decimal? fee)> GetPlanCost(RentPlan rentPlan);
+    Task CalcPlanCost( out Rent rent);
 }
