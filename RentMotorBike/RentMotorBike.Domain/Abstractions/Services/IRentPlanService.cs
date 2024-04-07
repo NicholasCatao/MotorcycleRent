@@ -4,5 +4,5 @@ namespace RentMotorBike.Domain.Abstractions.Services;
 
 public interface IRentPlanService
 {
-    Task CalcPlanCost( out Rent rent);
+    Task CalcPlanCost(Rent rent);
 }
