@@ -18,7 +18,7 @@ public sealed record RentCommandRequest : IRequest<Response<RentCommandResponse>
           => new Rent
           {
               InitialDate = request.InitialDate,
-              FinallDate = request.FinallDate,
+              FinalDate = request.FinallDate,
               MotorBikeId = request.MotorBikeId,
               RenterId = request.RenterId,
               RentPlan = request.RentPlan,

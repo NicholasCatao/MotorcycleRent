@@ -19,5 +19,5 @@ public class RentPlanService : IRentPlanService
         _ => throw new ArgumentException("Service Type undefined")  // TODO ADD Custom Exception
     } ?? throw new ArgumentNullException(nameof(IRentPlanCalcService), "Service not found."); // TODO ADD Custom Exception
 
-    public async Task CalcPlanCost(Rent rent) => await GetService(rent).CalcPlanCost();
+    public async Task CalcPlanCostAsync(Rent rent) => await GetService(rent).CalcPlanCostAsync(rent);
 }

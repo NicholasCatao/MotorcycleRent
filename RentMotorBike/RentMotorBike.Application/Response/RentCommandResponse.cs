@@ -6,7 +6,7 @@ namespace RentMotorBike.Application.Response;
 public record struct RentCommandResponse
 {
     public DateTime InitialDate { get; set; }
-    public DateTime FinallDate { get; set; }
+    public DateTime FinalDate { get; set; }
     public string MotorBikeId { get; set; }
     public long RenterId { get; set; }
     public RentPlan RentPlan { get; set; }
@@ -18,7 +18,7 @@ public record struct RentCommandResponse
         => new RentCommandResponse
         {
             InitialDate = response.InitialDate,
-            FinallDate = response.FinallDate,
+            FinalDate = response.FinalDate,
             MotorBikeId = response.MotorBikeId,
             RenterId = response.RenterId,
             RentPlan = response.RentPlan,

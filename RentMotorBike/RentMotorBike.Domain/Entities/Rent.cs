@@ -6,7 +6,7 @@ namespace RentMotorBike.Domain.Entities;
 public class Rent : BaseEntity
 {
     public DateTime InitialDate { get; set; }
-    public DateTime FinallDate { get; set; }
+    public DateTime FinalDate { get; set; }
     public string MotorBikeId { get; set; }
     public long RenterId { get; set; }
     public RentPlan RentPlan { get; set; }

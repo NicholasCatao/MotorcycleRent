@@ -17,6 +17,7 @@
     <ProjectReference Include="..\RentMotorBike.Application\RentMotorBike.Application.csproj" />
     <ProjectReference Include="..\RentMotorBike.Domain\RentMotorBike.Domain.csproj" />
     <ProjectReference Include="..\RentMotorBike.Infrastructure.CrossCutting\RentMotorBike.Infrastructure.CrossCutting.csproj" />
+    <ProjectReference Include="..\RentMotorBike.Infra\RentMotorBike.Infra.csproj" />
   </ItemGroup>
 
 </Project>

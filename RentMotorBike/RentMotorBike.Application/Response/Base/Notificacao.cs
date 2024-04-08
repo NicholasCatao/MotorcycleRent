@@ -9,5 +9,4 @@ public record struct Notificacao
     public string DetalheErro { get; set; }
 
     public override string ToString() =>  JsonSerializer.Serialize(this);
-         
 }

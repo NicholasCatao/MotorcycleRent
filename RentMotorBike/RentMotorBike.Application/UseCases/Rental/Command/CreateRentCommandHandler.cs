@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RentMotorBike.Application.Request;
 using RentMotorBike.Application.Response;
 using RentMotorBike.Domain.Abstractions.Repository;
+using RentMotorBike.Domain.Abstractions.Services;
 using RentMotorBike.Domain.Entities;
 using RentMotorBike.Domain.Response.Base;
 
@@ -12,11 +13,13 @@ public class CreateRentCommandHandler : IRequestHandler<RentCommandRequest, Resp
 {
     private readonly IUnitOfWorkFactory _unitOfWork;
     private readonly ILogger<CreateRentCommandHandler> _logger;
+    private readonly IRentPlanService _rentPlanService;
 
-    public CreateRentCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateRentCommandHandler> logger)
+    public CreateRentCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateRentCommandHandler> logger, IRentPlanService rentPlanService)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _rentPlanService = rentPlanService;
     }
 
     public async Task<Response<RentCommandResponse>> Handle(RentCommandRequest request, CancellationToken cancellationToken)
@@ -24,8 +27,7 @@ public class CreateRentCommandHandler : IRequestHandler<RentCommandRequest, Resp
 
         var entity = (Rent)request;
 
-        entity.Cost = 0;
-        entity.Fee = 0;
+        await _rentPlanService.CalcPlanCostAsync(entity);
 
         var uow = _unitOfWork.CreatePostgressUnitOfWork();
 

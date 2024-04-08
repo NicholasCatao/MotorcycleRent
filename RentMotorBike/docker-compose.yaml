@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres
     volumes:
-      - ./01-CreateTables.sql:/docker-entrypoint-initdb.d/01-basegeografica.sql
+      - ./01-CreateTables.sql:/docker-entrypoint-initdb.d/01-CreateTables.sql
     environment:
       POSTGRES_PASSWORD: "mypassword1234"
     ports:

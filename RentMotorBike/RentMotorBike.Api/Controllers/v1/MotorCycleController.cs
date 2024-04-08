@@ -7,6 +7,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace RentMotorBike.Api.Controllers.v1;
 
+[Route("[controller]")]
+[ApiController]
 public class MotorCycleController : BaseController
 {
     private readonly IMediator _mediator;

@@ -14,7 +14,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         _dbConnection = dbTransaction.Connection ?? default!;
         _dbTransaction = dbTransaction;
-        SqlMapperExtensions.TableNameMapper = (type) => type.Name;
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -31,7 +30,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         return await _dbConnection.GetAsync<TEntity>(id, _dbTransaction);
     }
-
 
     public async Task<int> InsertAsync(TEntity entity)
     {
