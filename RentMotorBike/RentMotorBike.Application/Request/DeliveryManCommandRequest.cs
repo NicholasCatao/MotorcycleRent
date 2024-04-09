@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using RentMotorBike.Application.Response;
-using RentMotorBike.Domain.Models;
+using RentMotorBike.Domain.ValueObjects;
 using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.Request;

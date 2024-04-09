@@ -2,14 +2,14 @@ CREATE DATABASE base;
 
 \c base;
 
-create table "motor_bike" (
-"Id"  SERIAL,
+
+create table IF NOT EXISTS "motor_bike" (
+Id  int  primary key GENERATED ALWAYS AS IDENTITY,
 "Plate" varchar(7),
-"Year" Date,
+"ReleaseDate" Date,
 "Model" varchar(50),
 "DateCreated" Date,
-"DateUpdated" Date,
-CONSTRAINT "PK_Plate" PRIMARY KEY ("Plate")
+"DateUpdated" Date
 );
 
 

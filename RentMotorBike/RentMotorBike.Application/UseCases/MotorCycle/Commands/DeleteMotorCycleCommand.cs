@@ -34,7 +34,7 @@ public class DeleteMotorCycleCommand : IRequest<Response<MotorBikeCommandRespons
                 Id = entity.Id,
                 Model = entity.Model,
                 Plate = entity.Plate,
-                Year = entity.Year
+                Year = entity.ReleaseDate,
             });
         }
     }

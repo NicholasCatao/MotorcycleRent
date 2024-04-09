@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using RentMotorBike.Domain.Response.Base;
+﻿using RentMotorBike.Domain.Response.Base;
 using System.Net.Mime;
 using System.Text.Json;
 

@@ -1,5 +1,5 @@
 ﻿using RentMotorBike.Domain.Common;
-using RentMotorBike.Domain.Models;
+using RentMotorBike.Domain.ValueObjects;
 
 namespace RentMotorBike.Domain.Entities;
 

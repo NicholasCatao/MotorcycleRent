@@ -21,7 +21,7 @@ public class CreateMotorCycleCommandHandler : IRequestHandler<MotorBikeCommandRe
 
     public async Task<Response<MotorBikeCommandResponse>> Handle(MotorBikeCommandRequest request, CancellationToken cancellationToken)
     {
-        var entity = new MotorBike(request.Year, request.Model, request.Plate);
+        var entity = (MotorBike)request;
 
         _logger.LogInformation("Starting Insert MotorBike");
 

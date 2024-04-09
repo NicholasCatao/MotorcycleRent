@@ -3,7 +3,6 @@ using RentMotorBike.Application;
 using RentMotorBike.Infra;
 using RentMotorBike.Infrastructure.CrossCutting.Configuration;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<AppSettingInjector>(builder.Configuration);
