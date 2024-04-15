@@ -1,4 +1,7 @@
 services:
+    
+  backend:
+    build: ./
   postgres:
     image: postgres
     volumes:
