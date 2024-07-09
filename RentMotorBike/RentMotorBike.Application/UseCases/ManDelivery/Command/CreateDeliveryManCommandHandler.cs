@@ -19,7 +19,6 @@ public class CreateDeliveryManCommandHandler : IRequestHandler<DeliveryManComman
         _logger = logger;
     }
 
-
     public async Task<Response<DeliveryManCommandResponse>> Handle(DeliveryManCommandRequest request, CancellationToken cancellationToken)
     {
 

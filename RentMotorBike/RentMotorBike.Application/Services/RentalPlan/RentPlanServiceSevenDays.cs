@@ -8,7 +8,7 @@ public class RentPlanServiceSevenDays : IRentPlanCalcService
 {
     private const int DayCost = 28;
     private const double Taxfee = 0.4;
-    public async Task CalcPlanCostAsync(Rent rent)
+    public Task CalcPlanCostAsync(Rent rent)
     {
         var rentEnd = rent.InitialDate.AddDays(15);
         var daysRemaining = (rentEnd - rent.FinalDate).TotalDays;
@@ -17,6 +17,8 @@ public class RentPlanServiceSevenDays : IRentPlanCalcService
         rent.Fee = Convert.ToDecimal((int)RentPlan.FIFTEEN * Taxfee);
 
         if (daysRemaining < (int)RentPlan.FIFTEEN)
-            rent.Cost = Convert.ToDecimal((DayCost * (int)RentPlan.FIFTEEN) * Taxfee);
+            rent.Cost = Convert.ToDecimal(DayCost * (int)RentPlan.FIFTEEN * Taxfee);
+
+        return Task.CompletedTask;
     }
 }

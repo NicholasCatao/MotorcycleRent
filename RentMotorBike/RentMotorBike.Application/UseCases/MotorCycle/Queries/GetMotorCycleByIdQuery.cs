@@ -10,7 +10,6 @@ namespace RentMotorBike.Application.UseCases.MotorCycle.Queries;
 public class GetMotorCycleByIdQuery : IRequest<Response<MotorBikeCommandResponse>>
 {
     public int Id { get; set; }
-    //public string Plate { get; set; }
 
     public class GetMotorCycleCommandHandler : IRequestHandler<GetMotorCycleByIdQuery, Response<MotorBikeCommandResponse>>
     {

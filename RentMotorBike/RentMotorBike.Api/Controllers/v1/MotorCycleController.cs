@@ -46,9 +46,5 @@ public class MotorCycleController : BaseController
 
         return response.PossuiErro ? HandleError(response) : Ok(response.Dados);
     }
-
-
-
-
 }
 
