@@ -2,7 +2,7 @@
 
 namespace RentMotorBike.Domain.Response.Base;
 
- public class Response<TDados> 
+ public class Response<TDados>
 {
     private readonly IList<string> _mensagens = new List<string>();
 

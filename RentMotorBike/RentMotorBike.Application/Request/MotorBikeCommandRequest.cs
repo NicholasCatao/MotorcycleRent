@@ -11,12 +11,11 @@ public sealed record MotorBikeCommandRequest() : IRequest<Response<MotorBikeComm
     public string? Model { get; set; }
     public string? Plate { get; set; }
 
-    public static explicit operator MotorBike(MotorBikeCommandRequest request)
-         => new MotorBike
-         {
-          Plate = request.Plate,
-          Model = request.Model,
-          ReleaseDate = request.Year
-         };
-
+    public static explicit operator MotorBike(MotorBikeCommandRequest request) =>
+        new MotorBike
+        {
+            Plate = request.Plate,
+            Model = request.Model,
+            ReleaseDate = request.Year
+        };
 }

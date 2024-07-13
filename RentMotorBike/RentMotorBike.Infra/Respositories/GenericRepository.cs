@@ -1,11 +1,12 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using System.Data;
+using Dapper.Contrib.Extensions;
 using RentMotorBike.Domain.Abstractions.Repository;
 using RentMotorBike.Domain.Common;
-using System.Data;
 
 namespace RentMotorBike.Infra.Respositories;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
+public class GenericRepository<TEntity> : IGenericRepository<TEntity>
+    where TEntity : BaseEntity
 {
     private readonly IDbConnection _dbConnection;
     private readonly IDbTransaction _dbTransaction;
@@ -15,7 +16,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _dbConnection = dbTransaction.Connection ?? default!;
         _dbTransaction = dbTransaction;
     }
-
+    // TODO add cancelation Token
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await _dbConnection.GetAllAsync<TEntity>(_dbTransaction);
@@ -33,7 +34,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public async Task<int> InsertAsync(TEntity entity)
     {
-        entity.DateCreated = DateTime.UtcNow;
         entity.DateUpdated = null;
         return await _dbConnection.InsertAsync(entity, _dbTransaction);
     }

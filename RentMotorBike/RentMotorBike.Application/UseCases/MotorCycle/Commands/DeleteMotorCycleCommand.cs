@@ -12,13 +12,16 @@ public class DeleteMotorCycleCommand : IRequest<Response<MotorBikeCommandRespons
 {
     public int Id { get; set; }
 
-
-    public class DeleteMotorCycleCommandHandler : IRequestHandler<UpdateMotorCycleCommand, Response<MotorBikeCommandResponse>>
+    public class DeleteMotorCycleCommandHandler
+        : IRequestHandler<UpdateMotorCycleCommand, Response<MotorBikeCommandResponse>>
     {
         private readonly IUnitOfWorkFactory _unitOfWork;
         private readonly ILogger<CreateMotorCycleCommandHandler> _logger;
 
-        public async  Task<Response<MotorBikeCommandResponse>> Handle(UpdateMotorCycleCommand request, CancellationToken cancellationToken)
+        public async Task<Response<MotorBikeCommandResponse>> Handle(
+            UpdateMotorCycleCommand request,
+            CancellationToken cancellationToken
+        )
         {
             using var uow = _unitOfWork.CreatePostgressUnitOfWork();
 
@@ -29,13 +32,15 @@ public class DeleteMotorCycleCommand : IRequest<Response<MotorBikeCommandRespons
 
             await uow.Repository<MotorBike>().DeleteAsync(request.Id);
 
-            return new Response<MotorBikeCommandResponse>(new MotorBikeCommandResponse
-            {
-                Id = entity.Id,
-                Model = entity.Model,
-                Plate = entity.Plate,
-                Year = entity.ReleaseDate,
-            });
+            return new Response<MotorBikeCommandResponse>(
+                new MotorBikeCommandResponse
+                {
+                    Id = entity.Id,
+                    Model = entity.Model,
+                    Plate = entity.Plate,
+                    Year = entity.ReleaseDate,
+                }
+            );
         }
     }
 }

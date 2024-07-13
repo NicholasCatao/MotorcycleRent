@@ -8,18 +8,25 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.MotorCycle.Commands;
 
-public class CreateMotorCycleCommandHandler : IRequestHandler<MotorBikeCommandRequest, Response<MotorBikeCommandResponse>>
+public class CreateMotorCycleCommandHandler
+    : IRequestHandler<MotorBikeCommandRequest, Response<MotorBikeCommandResponse>>
 {
     private readonly IUnitOfWorkFactory _unitOfWork;
     private readonly ILogger<CreateMotorCycleCommandHandler> _logger;
 
-    public CreateMotorCycleCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateMotorCycleCommandHandler> logger)
+    public CreateMotorCycleCommandHandler(
+        IUnitOfWorkFactory unitOfWork,
+        ILogger<CreateMotorCycleCommandHandler> logger
+    )
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
-    public async Task<Response<MotorBikeCommandResponse>> Handle(MotorBikeCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Response<MotorBikeCommandResponse>> Handle(
+        MotorBikeCommandRequest request,
+        CancellationToken cancellationToken
+    )
     {
         var entity = (MotorBike)request;
 

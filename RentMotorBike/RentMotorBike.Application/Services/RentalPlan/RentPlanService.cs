@@ -10,7 +10,7 @@ public class RentPlanService : IRentPlanService
 
     public RentPlanService(IEnumerable<IRentPlanCalcService> rentPlanCalcService) => _rentPlanCalcService = rentPlanCalcService;
 
-    private IRentPlanCalcService GetService(Rent rent)
+    private IRentPlanCalcService GetService(Rent rent)// TODO Use Dictionary
     => rent.RentPlan switch
     {
         RentPlan.SEVEN => _rentPlanCalcService.FirstOrDefault(x => x.GetType() == typeof(RentPlanServiceSevenDays)),

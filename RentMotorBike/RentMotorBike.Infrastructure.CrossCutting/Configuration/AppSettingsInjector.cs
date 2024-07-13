@@ -5,6 +5,9 @@ public class AppSettingInjector
     public string? PostgressConnectionString { get; set; }
 
     public string? RabbitHost { get; set; }
+    public string? RabbitQueue { get; set; }
+    public string? RabbitExchange { get; set; }
+    public string? RabbitRoutingKey { get; set; }
     public string? RabbitVirtualHost { get; set; }
     public string? RabbitUsername { get; set; }
     public string? RabbitPassword { get; set; }
