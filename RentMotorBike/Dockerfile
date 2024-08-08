@@ -1,4 +1,4 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
@@ -15,6 +15,7 @@ COPY ["RentMotorBike.Infrastructure.CrossCutting/RentMotorBike.Infrastructure.Cr
 COPY ["RentMotorBike.Infra/RentMotorBike.Infra.csproj", "RentMotorBike.Infra/"]
 RUN dotnet restore "./RentMotorBike.Api/RentMotorBike.Api.csproj"
 COPY . .
+RUN ls -R /src # Comando de debug para listar os arquivos e diretórios
 WORKDIR "/src/RentMotorBike.Api"
 RUN dotnet build "./RentMotorBike.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
@@ -25,4 +26,5 @@ RUN dotnet publish "./RentMotorBike.Api.csproj" -c $BUILD_CONFIGURATION -o /app/
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_ENVIRONMENT=Development
 ENTRYPOINT ["dotnet", "RentMotorBike.Api.dll"]
