@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}rentmotorbikeapi
     build:
       context: .
-      dockerfile: RentMotorBike.Api/Dockerfile
+      dockerfile: Dockerfile
     ports:
     - "5000:5000"
     - "5001:5001"
