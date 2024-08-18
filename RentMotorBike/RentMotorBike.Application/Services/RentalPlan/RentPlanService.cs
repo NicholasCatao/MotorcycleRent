@@ -4,20 +4,21 @@ using RentMotorBike.Domain.Enums;
 
 namespace RentMotorBike.Application.Services.RentalPlan;
 
-public class RentPlanService : IRentPlanService
+public class RentPlanService() : IRentPlanService
 {
-    private readonly IEnumerable<IRentPlanCalcService> _rentPlanCalcService;
+    public async Task CalcPlanCostAsync(Rent rent) =>
+        await CalcService(rent).CalcPlanCostAsync(rent);
 
-    public RentPlanService(IEnumerable<IRentPlanCalcService> rentPlanCalcService) => _rentPlanCalcService = rentPlanCalcService;
-
-    private IRentPlanCalcService GetService(Rent rent)// TODO Use Dictionary
-    => rent.RentPlan switch
+    private IRentPlanCalcService CalcService(Rent rent)
     {
-        RentPlan.SEVEN => _rentPlanCalcService.FirstOrDefault(x => x.GetType() == typeof(RentPlanServiceSevenDays)),
-        RentPlan.FIFTEEN => _rentPlanCalcService.FirstOrDefault(x => x.GetType() == typeof(RentPlanServiceFifteenDays)),
-        RentPlan.THIRTY => _rentPlanCalcService.FirstOrDefault(x => x.GetType() == typeof(RentPlanServiceThirtyDays)),
-        _ => throw new ArgumentException("Service Type undefined")  // TODO ADD Custom Exception
-    } ?? throw new ArgumentNullException(nameof(IRentPlanCalcService), "Service not found."); // TODO ADD Custom Exception
+        var calc = new Dictionary<RentPlan, IRentPlanCalcService>
+        {
+            { RentPlan.SEVEN, new RentPlanServiceSevenDays() },
+            { RentPlan.FIFTEEN, new RentPlanServiceFifteenDays() },
+            { RentPlan.THIRTY, new RentPlanServiceThirtyDays() }
+        };
 
-    public async Task CalcPlanCostAsync(Rent rent) => await GetService(rent).CalcPlanCostAsync(rent);
+        return calc.GetValueOrDefault(rent.RentPlan)
+            ?? throw new ArgumentNullException(nameof(IRentPlanCalcService), "Service not found.");
+    }
 }

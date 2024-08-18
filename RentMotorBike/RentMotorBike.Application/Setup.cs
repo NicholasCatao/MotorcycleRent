@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using RentMotorBike.Application.Services.RentalPlan;
 using RentMotorBike.Application.Validators;
@@ -20,6 +21,11 @@ public static class Setup
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+        });
+
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq();
         });
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
