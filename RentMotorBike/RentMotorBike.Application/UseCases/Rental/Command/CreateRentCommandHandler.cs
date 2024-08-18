@@ -24,21 +24,27 @@ public class CreateRentCommandHandler(
         CancellationToken cancellationToken
     )
     {
-        _logger.LogWarning("Starting Order");
+        _logger.LogInformation("Starting Order");
 
         var entity = (Rent)request;
 
-        _logger.LogWarning("Entity result from implicit converter: {0}", entity);
+        _logger.LogInformation("Entity result from implicit converter: {0}", entity);
 
-        _logger.LogWarning("Choising the right service calc.");
+        _logger.LogInformation("Choising the right service calc.");
 
         await _rentPlanService.CalcPlanCostAsync(entity);
 
+        _logger.LogInformation("Creating unit of work");
+
         var uow = _unitOfWorkFactory.CreatePostgressUnitOfWork();
+
+        _logger.LogInformation("Inserting data");
 
         var id = await uow.Repository<Rent>().InsertAsync(entity);
 
         uow.Commit();
+
+        _logger.LogInformation("Commit data");
 
         entity.Id = id;
 
