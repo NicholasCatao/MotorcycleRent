@@ -11,37 +11,36 @@ public class GetDeliveryManByIdQuery : IRequest<Response<DeliveryManCommandRespo
 {
     public int Id { get; set; }
 
-
-    public class GetDeliveryManCommandHandler : IRequestHandler<GetDeliveryManByIdQuery, Response<DeliveryManCommandResponse>>
+    public class GetDeliveryManCommandHandler(
+        IUnitOfWorkFactory unitOfWorkFactory,
+        ILogger<GetDeliveryManByIdQuery> logger
+    ) : IRequestHandler<GetDeliveryManByIdQuery, Response<DeliveryManCommandResponse>>
     {
-        private readonly IUnitOfWorkFactory _unitOfWork;
-        private readonly ILogger<GetDeliveryManByIdQuery> _logger;
+        private readonly IUnitOfWorkFactory _unitOfWork = unitOfWorkFactory;
+        private readonly ILogger<GetDeliveryManByIdQuery> _logger = logger;
 
-        public GetDeliveryManCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetDeliveryManByIdQuery> logger)
+        public async Task<Response<DeliveryManCommandResponse>> Handle(
+            GetDeliveryManByIdQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
-        }
-
-        public async Task<Response<DeliveryManCommandResponse>> Handle(GetDeliveryManByIdQuery request, CancellationToken cancellationToken)
-        {
-          using var uow = _unitOfWork.CreatePostgressUnitOfWork();
+            using var uow = _unitOfWork.CreatePostgressUnitOfWork();
 
             var response = await uow.Repository<DeliveryMan>().GetByIdAsync(request.Id);
 
             if (response is null)
                 return new Response<DeliveryManCommandResponse>(Domain.Enums.MotivoErro.NotFound);
 
-            return new Response<DeliveryManCommandResponse>(new DeliveryManCommandResponse
-            {
-                Id = response.Id,
-                Name = response.Name,
-                Cnpj = response.Cnpj,
-                LicenseDriver = response.LicenseDriver,
-                LicenseDriverImg = ""
-
-            });
+            return new Response<DeliveryManCommandResponse>(
+                new DeliveryManCommandResponse
+                {
+                    Id = response.Id,
+                    Name = response.Name,
+                    Cnpj = response.Cnpj,
+                    LicenseDriver = response.LicenseDriver,
+                    LicenseDriverImg = ""
+                }
+            );
         }
     }
 }
- 

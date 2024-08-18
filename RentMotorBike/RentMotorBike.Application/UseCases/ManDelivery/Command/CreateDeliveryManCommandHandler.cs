@@ -8,21 +8,25 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.ManDelivery.Command;
 
-public class CreateDeliveryManCommandHandler : IRequestHandler<DeliveryManCommandRequest, Response<DeliveryManCommandResponse>>
+public class CreateDeliveryManCommandHandler(
+    IUnitOfWorkFactory unitOfWorkFactory,
+    ILogger<CreateDeliveryManCommandHandler> logger
+) : IRequestHandler<DeliveryManCommandRequest, Response<DeliveryManCommandResponse>>
 {
-    private readonly IUnitOfWorkFactory _unitOfWork;
-    private readonly ILogger<CreateDeliveryManCommandHandler> _logger;
+    private readonly IUnitOfWorkFactory _unitOfWork = unitOfWorkFactory;
+    private readonly ILogger<CreateDeliveryManCommandHandler> _logger = logger;
 
-    public CreateDeliveryManCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateDeliveryManCommandHandler> logger)
+    public async Task<Response<DeliveryManCommandResponse>> Handle(
+        DeliveryManCommandRequest request,
+        CancellationToken cancellationToken
+    )
     {
-        _unitOfWork = unitOfWork;
-        _logger = logger;
-    }
-
-    public async Task<Response<DeliveryManCommandResponse>> Handle(DeliveryManCommandRequest request, CancellationToken cancellationToken)
-    {
-
-        var entity = new DeliveryMan(request.Name, request.Cnpj, request.BirthDate, request.LicenseDriver.Number);
+        var entity = new DeliveryMan(
+            request.Name,
+            request.Cnpj,
+            request.BirthDate,
+            request.LicenseDriver.Number
+        );
         var licenseDriver = request.LicenseDriver;
 
         _logger.LogInformation("Starting Insert DeliveryMan");
@@ -35,6 +39,8 @@ public class CreateDeliveryManCommandHandler : IRequestHandler<DeliveryManComman
 
         _logger.LogInformation("Finished Insert DeliveryMan");
 
-        return new Response<DeliveryManCommandResponse>(new DeliveryManCommandResponse { Id = id, Cnpj = request.Cnpj,  });
+        return new Response<DeliveryManCommandResponse>(
+            new DeliveryManCommandResponse { Id = id, Cnpj = request.Cnpj, }
+        );
     }
 }

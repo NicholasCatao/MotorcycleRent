@@ -11,18 +11,18 @@ public class GetMotorCycleByIdQuery : IRequest<Response<MotorBikeCommandResponse
 {
     public int Id { get; set; }
 
-    public class GetMotorCycleCommandHandler : IRequestHandler<GetMotorCycleByIdQuery, Response<MotorBikeCommandResponse>>
+    public class GetMotorCycleCommandHandler(
+        IUnitOfWorkFactory unitOfWorkFactory,
+        ILogger<GetMotorCycleCommandHandler> logger
+    ) : IRequestHandler<GetMotorCycleByIdQuery, Response<MotorBikeCommandResponse>>
     {
-        private readonly IUnitOfWorkFactory _unitOfWork;
-        private readonly ILogger<GetMotorCycleCommandHandler> _logger;
+        private readonly IUnitOfWorkFactory _unitOfWork = unitOfWorkFactory;
+        private readonly ILogger<GetMotorCycleCommandHandler> _logger = logger;
 
-        public GetMotorCycleCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetMotorCycleCommandHandler> logger)
-        {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
-        }
-
-        public async Task<Response<MotorBikeCommandResponse>> Handle(GetMotorCycleByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<MotorBikeCommandResponse>> Handle(
+            GetMotorCycleByIdQuery request,
+            CancellationToken cancellationToken
+        )
         {
             using var uow = _unitOfWork.CreatePostgressUnitOfWork();
 
@@ -31,18 +31,15 @@ public class GetMotorCycleByIdQuery : IRequest<Response<MotorBikeCommandResponse
             if (response is null)
                 return new Response<MotorBikeCommandResponse>(Domain.Enums.MotivoErro.NotFound);
 
-            return new Response<MotorBikeCommandResponse>(new MotorBikeCommandResponse
-            {
-                Id = response.Id,
-                Plate = response.Plate,
-                Model = response.Model,
-                Year = response.ReleaseDate,
-            });
+            return new Response<MotorBikeCommandResponse>(
+                new MotorBikeCommandResponse
+                {
+                    Id = response.Id,
+                    Plate = response.Plate,
+                    Model = response.Model,
+                    Year = response.ReleaseDate,
+                }
+            );
         }
     }
 }
-
-
-
-
-

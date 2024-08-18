@@ -9,23 +9,32 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.Rental.Command;
 
-public class CreateRentCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateRentCommandHandler> logger, IRentPlanService rentPlanService) : IRequestHandler<RentCommandRequest, Response<RentCommandResponse>>
+public class CreateRentCommandHandler(
+    IUnitOfWorkFactory unitOfWorkFactory,
+    ILogger<CreateRentCommandHandler> logger,
+    IRentPlanService rentPlanService
+) : IRequestHandler<RentCommandRequest, Response<RentCommandResponse>>
 {
+    private readonly IUnitOfWorkFactory _unitOfWorkFactory = unitOfWorkFactory;
+    private readonly ILogger<CreateRentCommandHandler> _logger = logger;
+    private readonly IRentPlanService _rentPlanService = rentPlanService;
 
-    public async Task<Response<RentCommandResponse>> Handle(RentCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Response<RentCommandResponse>> Handle(
+        RentCommandRequest request,
+        CancellationToken cancellationToken
+    )
     {
-
-        logger.LogWarning("Starting Order");
+        _logger.LogWarning("Starting Order");
 
         var entity = (Rent)request;
 
-        logger.LogWarning("Entity result from implicit converter: {0}", entity);
+        _logger.LogWarning("Entity result from implicit converter: {0}", entity);
 
-        logger.LogWarning("Choising the right service calc.");
+        _logger.LogWarning("Choising the right service calc.");
 
-        await rentPlanService.CalcPlanCostAsync(entity);
+        await _rentPlanService.CalcPlanCostAsync(entity);
 
-        var uow = unitOfWork.CreatePostgressUnitOfWork();
+        var uow = _unitOfWorkFactory.CreatePostgressUnitOfWork();
 
         var id = await uow.Repository<Rent>().InsertAsync(entity);
 

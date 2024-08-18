@@ -10,13 +10,15 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.OrderDemand.Command;
 
-public class CreateOrderCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateOrderCommandHandler> logger, IMediator mediator)
-    : IRequestHandler<OrderCommandRequest, Response<OrderCommandResponse>>
+public class CreateOrderCommandHandler(
+    IUnitOfWorkFactory unitOfWork,
+    ILogger<CreateOrderCommandHandler> logger,
+    IMediator mediator
+) : IRequestHandler<OrderCommandRequest, Response<OrderCommandResponse>>
 {
     private readonly IUnitOfWorkFactory _unitOfWork = unitOfWork;
     private readonly ILogger<CreateOrderCommandHandler> _logger = logger;
     private readonly IMediator _mediator = mediator;
-
 
     public async Task<Response<OrderCommandResponse>> Handle(
         OrderCommandRequest request,

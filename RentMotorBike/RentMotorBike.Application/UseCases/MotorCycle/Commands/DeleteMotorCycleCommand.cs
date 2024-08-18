@@ -12,11 +12,13 @@ public class DeleteMotorCycleCommand : IRequest<Response<MotorBikeCommandRespons
 {
     public int Id { get; set; }
 
-    public class DeleteMotorCycleCommandHandler
-        : IRequestHandler<UpdateMotorCycleCommand, Response<MotorBikeCommandResponse>>
+    public class DeleteMotorCycleCommandHandler(
+        IUnitOfWorkFactory unitOfWorkFactory,
+        ILogger<CreateMotorCycleCommandHandler> logger
+    ) : IRequestHandler<UpdateMotorCycleCommand, Response<MotorBikeCommandResponse>>
     {
-        private readonly IUnitOfWorkFactory _unitOfWork;
-        private readonly ILogger<CreateMotorCycleCommandHandler> _logger;
+        private readonly IUnitOfWorkFactory _unitOfWork = unitOfWorkFactory;
+        private readonly ILogger<CreateMotorCycleCommandHandler> _logger = logger;
 
         public async Task<Response<MotorBikeCommandResponse>> Handle(
             UpdateMotorCycleCommand request,
