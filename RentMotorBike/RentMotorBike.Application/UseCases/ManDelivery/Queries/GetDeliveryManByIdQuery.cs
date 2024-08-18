@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RentMotorBike.Application.Response;
 using RentMotorBike.Domain.Abstractions.Repository;
 using RentMotorBike.Domain.Entities;
+using RentMotorBike.Domain.Enums;
 using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.ManDelivery.Queries;
@@ -29,7 +30,7 @@ public class GetDeliveryManByIdQuery : IRequest<Response<DeliveryManCommandRespo
             var response = await uow.Repository<DeliveryMan>().GetByIdAsync(request.Id);
 
             if (response is null)
-                return new Response<DeliveryManCommandResponse>(Domain.Enums.MotivoErro.NotFound);
+                return new Response<DeliveryManCommandResponse>(MotivoErro.NotFound);
 
             return new Response<DeliveryManCommandResponse>(
                 new DeliveryManCommandResponse
