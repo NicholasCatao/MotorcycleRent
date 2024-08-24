@@ -11,7 +11,7 @@ public class OrderCreatedHandler(IPublishEndpoint publishEndpoint) : INotificati
 
     public async Task Handle(OrderCreatedNotification notification, CancellationToken cancellationToken)
     {
-       await _publishEndpoint.Publish<OrderCreated>(new OrderCreated
+       await _publishEndpoint.Publish<OrderCreated>(new ()
         {
             Id = notification.Id
         },cancellationToken);

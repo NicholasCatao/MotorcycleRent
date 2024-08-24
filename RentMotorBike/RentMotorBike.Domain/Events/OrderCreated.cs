@@ -1,6 +1,6 @@
 ﻿namespace RentMotorBike.Domain.Events;
 
-public class OrderCreated
+public record OrderCreated
 {
     public int Id { get; set; }
 }

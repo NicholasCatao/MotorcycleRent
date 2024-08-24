@@ -2,7 +2,7 @@
 
 namespace RentMotorBike.Domain.Notifications;
 
-public class OrderCreatedNotification : INotification
+public record OrderCreatedNotification : INotification
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 }
