@@ -7,12 +7,10 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace RentMotorBike.Api.Controllers.v1;
 
-public class OrderController : BaseController
+[Route("[controller]")]
+[ApiController]
+public class OrderController(IMediator mediator) : BaseController
 {
-    private readonly IMediator _mediator;
-
-    public OrderController(IMediator mediator) => _mediator = mediator;
-
     [HttpPost]
     [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(int))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, Type = typeof(Notificacao))]
@@ -20,7 +18,7 @@ public class OrderController : BaseController
     [SwaggerResponse(StatusCodes.Status500InternalServerError, Type = typeof(Notificacao))]
     public async Task<IActionResult> CreateMotorCycle([FromBody] OrderCommandRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await mediator.Send(request);
 
         return response.PossuiErro ? HandleError(response) : Ok(response.Dados);
     }

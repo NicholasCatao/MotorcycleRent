@@ -9,8 +9,7 @@ namespace RentMotorBike.Application.Request;
 public sealed record OrderCommandRequest : IRequest<Response<OrderCommandResponse>>
 {
     public Decimal Fee { get; set; }
-    public Situation Situation { get; set; }
 
     public static explicit operator Order(OrderCommandRequest request) =>
-        new Order { Fee = request.Fee, Situation = request.Situation, };
+        new Order { Fee = request.Fee};
 }

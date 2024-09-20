@@ -1,10 +1,11 @@
-﻿using System.Text.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace RentMotorBike.Domain.Response.Base;
 
 public record struct Notificacao
 {
-    public string Campo { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Campo { get; set; }
 
     public string DetalheErro { get; set; }
 

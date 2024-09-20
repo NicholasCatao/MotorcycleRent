@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using RentMotorBike.Application.Services.Broker;
 using RentMotorBike.Application.Services.RentalPlan;
 using RentMotorBike.Application.Validators;
 using RentMotorBike.Domain.Abstractions.Services;
@@ -15,6 +16,8 @@ public static class Setup
         services.AddScoped<IRentPlanCalcService, RentPlanServiceSevenDays>();
         services.AddScoped<IRentPlanCalcService, RentPlanServiceFifteenDays>();
         services.AddScoped<IRentPlanCalcService, RentPlanServiceThirtyDays>();
+
+        services.AddScoped<IRabbitMQService, RabbitMqService>();
 
         services.AddMediatR(cfg =>
         {

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RentMotorBike.Domain.Abstractions.Brokers;
@@ -6,23 +7,24 @@ using RentMotorBike.Infrastructure.CrossCutting.Configuration;
 
 namespace RentMotorBike.Infra.Brokers;
 
-public class RabbitMQ : IRabbitMQ
+public class RabbitMqService(IOptions<AppSettingInjector> options) : IRabbitMQ
 {
-    private readonly AppSettingInjector _appSettingInjector;
+    private readonly AppSettingInjector _appSettingInjector = options.Value;
 
-    public RabbitMQ(IOptions<AppSettingInjector> options) => _appSettingInjector = options.Value;
-
-    public async Task SendAsync(int id)
+    public Task Send<T>(T message)
     {
-        var body = Encoding.UTF8.GetBytes(id.ToString());
+        var serializedMessage = JsonSerializer.Serialize<T>(message);
+        var body = Encoding.UTF8.GetBytes(serializedMessage);
 
         var factory = new ConnectionFactory { HostName = _appSettingInjector.RabbitHost };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
 
+        channel.QueueBind(queue: _appSettingInjector.RabbitQueue, exchange: _appSettingInjector.RabbitExchange, routingKey: string.Empty);
+
         channel.QueueDeclare(
             queue: _appSettingInjector.RabbitQueue,
-            durable: false,
+            durable: true,
             exclusive: false,
             autoDelete: false,
             arguments: null
@@ -30,9 +32,11 @@ public class RabbitMQ : IRabbitMQ
 
         channel.BasicPublish(
             exchange: _appSettingInjector.RabbitExchange,
-            routingKey: _appSettingInjector.RabbitRoutingKey,
+            routingKey: string.Empty,
             basicProperties: null,
             body: body
         );
+
+        return Task.CompletedTask;
     }
 }

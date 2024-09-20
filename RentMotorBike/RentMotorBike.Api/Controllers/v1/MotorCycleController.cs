@@ -10,12 +10,8 @@ namespace RentMotorBike.Api.Controllers.v1;
 
 [Route("[controller]")]
 [ApiController]
-public class MotorCycleController : BaseController
+public class MotorCycleController(IMediator mediator) : BaseController
 {
-    private readonly IMediator _mediator;
-
-    public MotorCycleController(IMediator mediator) => _mediator = mediator;
-
     /// <summary>
     /// Creates an Motorcycle
     /// </summary>		
@@ -26,7 +22,7 @@ public class MotorCycleController : BaseController
     [SwaggerResponse(StatusCodes.Status500InternalServerError, Type = typeof(Notificacao))]
     public async Task<IActionResult> CreateMotorCycle([FromBody] MotorBikeCommandRequest  request)
     {
-        var response = await _mediator.Send(request);
+        var response = await mediator.Send(request);
 
         return response.PossuiErro ? HandleError(response) : Ok(response.Dados);
     }
@@ -42,7 +38,7 @@ public class MotorCycleController : BaseController
     {
         var query = new GetMotorCycleByIdQuery { Id = id };
 
-        var response = await _mediator.Send(query);
+        var response = await mediator.Send(query);
 
         return response.PossuiErro ? HandleError(response) : Ok(response.Dados);
     }

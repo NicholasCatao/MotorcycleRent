@@ -2,5 +2,5 @@
 
 public interface IRabbitMQ
 {
-    Task SendAsync(int id);
+    Task Send<T>(T message);
 }

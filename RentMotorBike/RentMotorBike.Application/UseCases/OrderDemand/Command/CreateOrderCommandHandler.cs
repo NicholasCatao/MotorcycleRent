@@ -10,35 +10,25 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.OrderDemand.Command;
 
-partial class CreateOrderCommandHandler
-    : IRequestHandler<OrderCommandRequest, Response<OrderCommandResponse>>
+public class CreateOrderCommandHandler(
+    IUnitOfWorkFactory unitOfWork,
+    ILogger<CreateOrderCommandHandler> logger,
+    IRabbitMQService rabbitMqService
+) : IRequestHandler<OrderCommandRequest, Response<OrderCommandResponse>>
 {
-    private readonly IUnitOfWorkFactory _unitOfWork;
-    private readonly ILogger<CreateOrderCommandHandler> _logger;
-    private readonly IRabbitMQService _rabbitMQService;
-
-    public CreateOrderCommandHandler(
-        IUnitOfWorkFactory unitOfWork,
-        ILogger<CreateOrderCommandHandler> logger
-    )
-    {
-        _unitOfWork = unitOfWork;
-        _logger = logger;
-    }
-
     public async Task<Response<OrderCommandResponse>> Handle(
         OrderCommandRequest request,
         CancellationToken cancellationToken
     )
     {
-        var uow = _unitOfWork.CreatePostgressUnitOfWork();
+        var uow = unitOfWork.CreatePostgressUnitOfWork();
         var entity = (Order)request;
 
         var id = await uow.Repository<Order>().InsertAsync(entity);
 
         uow.Commit();
 
-        await _rabbitMQService.SendAsync(id);
+        await rabbitMqService.SendAsync<int>(id);
 
         return new Response<OrderCommandResponse>(
             new OrderCommandResponse
