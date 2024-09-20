@@ -9,27 +9,21 @@ using RentMotorBike.Domain.Response.Base;
 
 namespace RentMotorBike.Application.UseCases.Rental.Command;
 
-public class CreateRentCommandHandler : IRequestHandler<RentCommandRequest, Response<RentCommandResponse>>
+public class CreateRentCommandHandler(
+    IUnitOfWorkFactory unitOfWork,
+    ILogger<CreateRentCommandHandler> logger,
+    IRentPlanService rentPlanService)
+    : IRequestHandler<RentCommandRequest, Response<RentCommandResponse>>
 {
-    private readonly IUnitOfWorkFactory _unitOfWork;
-    private readonly ILogger<CreateRentCommandHandler> _logger;
-    private readonly IRentPlanService _rentPlanService;
-
-    public CreateRentCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<CreateRentCommandHandler> logger, IRentPlanService rentPlanService)
-    {
-        _unitOfWork = unitOfWork;
-        _logger = logger;
-        _rentPlanService = rentPlanService;
-    }
+    private readonly ILogger<CreateRentCommandHandler> _logger = logger;
 
     public async Task<Response<RentCommandResponse>> Handle(RentCommandRequest request, CancellationToken cancellationToken)
     {
-
         var entity = (Rent)request;
 
-        await _rentPlanService.CalcPlanCostAsync(entity);
+        await rentPlanService.CalcPlanCostAsync(entity);
 
-        var uow = _unitOfWork.CreatePostgressUnitOfWork();
+        var uow = unitOfWork.CreatePostgressUnitOfWork();
 
         var id = await uow.Repository<Rent>().InsertAsync(entity);
 

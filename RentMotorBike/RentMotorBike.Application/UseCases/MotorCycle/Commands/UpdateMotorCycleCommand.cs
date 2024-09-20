@@ -24,7 +24,7 @@ public class UpdateMotorCycleCommand : IRequest<Response<MotorBikeCommandRespons
 
             var entity = await uow.Repository<MotorBike>().GetByIdAsync(request.Id);
 
-            if (entity == null)
+            if (entity is null)
                 return new Response<MotorBikeCommandResponse>(MotivoErro.NotFound);
 
            await uow.Repository<MotorBike>().UpdateAsync(entity);

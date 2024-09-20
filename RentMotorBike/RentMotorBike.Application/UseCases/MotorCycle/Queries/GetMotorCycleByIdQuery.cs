@@ -11,20 +11,14 @@ public class GetMotorCycleByIdQuery : IRequest<Response<MotorBikeCommandResponse
 {
     public int Id { get; set; }
 
-    public class GetMotorCycleCommandHandler : IRequestHandler<GetMotorCycleByIdQuery, Response<MotorBikeCommandResponse>>
+    public class GetMotorCycleCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetMotorCycleCommandHandler> logger)
+        : IRequestHandler<GetMotorCycleByIdQuery, Response<MotorBikeCommandResponse>>
     {
-        private readonly IUnitOfWorkFactory _unitOfWork;
-        private readonly ILogger<GetMotorCycleCommandHandler> _logger;
-
-        public GetMotorCycleCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetMotorCycleCommandHandler> logger)
-        {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
-        }
+        private readonly ILogger<GetMotorCycleCommandHandler> _logger = logger;
 
         public async Task<Response<MotorBikeCommandResponse>> Handle(GetMotorCycleByIdQuery request, CancellationToken cancellationToken)
         {
-            using var uow = _unitOfWork.CreatePostgressUnitOfWork();
+            using var uow = unitOfWork.CreatePostgressUnitOfWork();
 
             var response = await uow.Repository<MotorBike>().GetByIdAsync(request.Id);
 

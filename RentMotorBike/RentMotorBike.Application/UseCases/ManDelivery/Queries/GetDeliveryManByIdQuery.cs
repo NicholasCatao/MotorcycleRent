@@ -12,20 +12,14 @@ public class GetDeliveryManByIdQuery : IRequest<Response<DeliveryManCommandRespo
     public int Id { get; set; }
 
 
-    public class GetDeliveryManCommandHandler : IRequestHandler<GetDeliveryManByIdQuery, Response<DeliveryManCommandResponse>>
+    public class GetDeliveryManCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetDeliveryManByIdQuery> logger)
+        : IRequestHandler<GetDeliveryManByIdQuery, Response<DeliveryManCommandResponse>>
     {
-        private readonly IUnitOfWorkFactory _unitOfWork;
-        private readonly ILogger<GetDeliveryManByIdQuery> _logger;
-
-        public GetDeliveryManCommandHandler(IUnitOfWorkFactory unitOfWork, ILogger<GetDeliveryManByIdQuery> logger)
-        {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
-        }
+        private readonly ILogger<GetDeliveryManByIdQuery> _logger = logger;
 
         public async Task<Response<DeliveryManCommandResponse>> Handle(GetDeliveryManByIdQuery request, CancellationToken cancellationToken)
         {
-          using var uow = _unitOfWork.CreatePostgressUnitOfWork();
+          using var uow = unitOfWork.CreatePostgressUnitOfWork();
 
             var response = await uow.Repository<DeliveryMan>().GetByIdAsync(request.Id);
 
