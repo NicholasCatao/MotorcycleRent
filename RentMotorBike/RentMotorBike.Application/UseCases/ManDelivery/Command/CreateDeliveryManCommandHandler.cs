@@ -22,7 +22,7 @@ public class CreateDeliveryManCommandHandler : IRequestHandler<DeliveryManComman
     public async Task<Response<DeliveryManCommandResponse>> Handle(DeliveryManCommandRequest request, CancellationToken cancellationToken)
     {
 
-        var entity = new DeliveryMan(request.Name, request.Cnpj, request.BirthDate, request.LicenseDriver.Number);
+        var entity = new DeliveryMan(request?.Name, request.Cnpj, request.BirthDate, request.LicenseDriver.Number);
         var licenseDriver = request.LicenseDriver;
 
         _logger.LogInformation("Starting Insert DeliveryMan");

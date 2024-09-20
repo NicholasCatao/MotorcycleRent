@@ -8,7 +8,7 @@ namespace RentMotorBike.Application.Request;
 public sealed record DeliveryManCommandRequest : IRequest<Response<DeliveryManCommandResponse>>
 {
     public string? Name { get; set; }
-    public long Cnpj { get; set; }
+    public string Cnpj { get; set; }
     public DateTime BirthDate { get; set; }
     public LicenseDriver LicenseDriver { get; set; }
 }

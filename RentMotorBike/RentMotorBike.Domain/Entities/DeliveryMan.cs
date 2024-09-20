@@ -2,21 +2,13 @@
 
 namespace RentMotorBike.Domain.Entities;
 
-public class DeliveryMan : BaseEntity
+public class DeliveryMan(string name, string cnpj, DateTime birthDate, int licenseDriverNumber)
+    : BaseEntity
 {
-    public string Name { get; set; }
-    public long Cnpj { get; set; }
-    public DateTime BirthDate { get; set; }
-    public int LicenseDriver { get; set;}
-
-
-    public DeliveryMan(string name, long Cnpj, DateTime BirthDate, int LicenseDriverNumber)
-    {
-        this.Name = name;
-        this.Cnpj = Cnpj;
-        this.BirthDate = BirthDate;
-        this.LicenseDriver = LicenseDriverNumber;
-    }
+    public string Name { get; set; } = name;
+    public string Cnpj { get; set; } = cnpj;
+    public DateTime BirthDate { get; set; } = birthDate;
+    public int LicenseDriver { get; set;} = licenseDriverNumber;
 }
 
 
