@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using RentMotorBike.Domain.Abstractions.Brokers;
 using RentMotorBike.Infrastructure.CrossCutting.Configuration;
 
@@ -20,7 +21,8 @@ public class RabbitMqService(IOptions<AppSettingInjector> options) : IRabbitMQ
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
 
-        channel.QueueBind(queue: _appSettingInjector.RabbitQueue, exchange: _appSettingInjector.RabbitExchange, routingKey: string.Empty);
+        channel.QueueBind(queue: _appSettingInjector.RabbitQueue, exchange: _appSettingInjector.RabbitExchange,
+            routingKey: string.Empty);
 
         channel.QueueDeclare(
             queue: _appSettingInjector.RabbitQueue,

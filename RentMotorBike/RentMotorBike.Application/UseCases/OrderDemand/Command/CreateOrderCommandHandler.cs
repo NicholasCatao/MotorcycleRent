@@ -28,7 +28,7 @@ public class CreateOrderCommandHandler(
 
         uow.Commit();
 
-        await rabbitMqService.SendAsync<int>(id);
+        await rabbitMqService.SendAsync<int>(id); // TODO add notification
 
         return new Response<OrderCommandResponse>(
             new OrderCommandResponse

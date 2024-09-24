@@ -8,16 +8,19 @@
 
   <ItemGroup>
     <Compile Remove="Abstractions\**" />
+    <Compile Remove="BackGroundServices\**" />
     <Compile Remove="DTOS\**" />
     <EmbeddedResource Remove="Abstractions\**" />
+    <EmbeddedResource Remove="BackGroundServices\**" />
     <EmbeddedResource Remove="DTOS\**" />
     <None Remove="Abstractions\**" />
+    <None Remove="BackGroundServices\**" />
     <None Remove="DTOS\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
-    <PackageReference Include="MediatR" Version="12.4.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
@@ -27,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BackGroundServices\" />
     <Folder Include="UseCases\Rental\Queries\" />
   </ItemGroup>
 
