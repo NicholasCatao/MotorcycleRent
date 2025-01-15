@@ -9,5 +9,5 @@ public enum LicenseDriverCategory : byte
     [Description(" B Category")]
     B = 1,
     [Description(" AB Category")]
-    AB = 2
+    Ab = 2
 }

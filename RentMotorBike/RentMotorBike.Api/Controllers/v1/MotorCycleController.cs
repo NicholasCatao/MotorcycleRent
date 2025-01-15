@@ -13,7 +13,7 @@ namespace RentMotorBike.Api.Controllers.v1;
 public class MotorCycleController(IMediator mediator) : BaseController
 {
     /// <summary>
-    /// Creates an Motorcycle
+    /// Creates a Motorcycle
     /// </summary>		
     [HttpPost]
     [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(int))]
@@ -27,7 +27,7 @@ public class MotorCycleController(IMediator mediator) : BaseController
         return response.PossuiErro ? HandleError(response) : Ok(response.Dados);
     }
     /// <summary>
-    /// Gets an Motorcycle
+    /// Gets a Motorcycle
     /// </summary
     [HttpGet]
     [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(int))]

@@ -2,5 +2,5 @@
 
 public interface IRabbitMQ
 {
-    Task Send<T>(T message);
+    Task Send<T>(T message, string queue);
 }

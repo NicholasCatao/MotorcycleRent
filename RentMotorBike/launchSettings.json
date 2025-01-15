@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
-        "rentmotorbike.api": "StartDebugging"
+        "rentmotorbike.api": "StartDebugging",
+        "rentmotorbike.workers": "StartDebugging"
       }
     }
   }

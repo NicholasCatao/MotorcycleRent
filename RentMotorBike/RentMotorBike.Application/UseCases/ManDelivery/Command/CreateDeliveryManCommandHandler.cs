@@ -17,9 +17,9 @@ public class CreateDeliveryManCommandHandler(
     {
 
         var entity = new DeliveryMan(request?.Name, request.Cnpj, request.BirthDate, request.LicenseDriver.Number);
-        var licenseDriver = request.LicenseDriver;
+        var licenseDriver = request.LicenseDriver.Image;
 
-        logger.LogInformation("Starting Insert DeliveryMan");
+        logger.LogInformation("Starting Insert DeliveryMan {entity}", entity);
 
         using var uow = unitOfWork.CreatePostgressUnitOfWork();
 
@@ -28,6 +28,7 @@ public class CreateDeliveryManCommandHandler(
         uow.Commit();
 
         logger.LogInformation("Finished Insert DeliveryMan");
+
 
         return new Response<DeliveryManCommandResponse>(new DeliveryManCommandResponse { Id = id, Cnpj = request.Cnpj,  });
     }

@@ -17,7 +17,7 @@ public static class Setup
         services.AddScoped<IRentPlanCalcService, RentPlanServiceFifteenDays>();
         services.AddScoped<IRentPlanCalcService, RentPlanServiceThirtyDays>();
 
-        services.AddScoped<IRabbitMQService, RabbitMqService>();
+     //   services.AddScoped<IRabbitMQService, RabbitMqService>();
 
         services.AddMediatR(cfg =>
         {

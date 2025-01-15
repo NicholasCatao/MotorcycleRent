@@ -32,9 +32,16 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - rabbitmq_go_net
+  rentmotorbike.workers:
+    image: ${DOCKER_REGISTRY-}rentmotorbikeworkers
+    build:
+      context: .
+      dockerfile: RentMotorBike.Workers/Dockerfile
+
 networks:
   rabbitmq_go_net:
     driver: bridge
     
 
     
+

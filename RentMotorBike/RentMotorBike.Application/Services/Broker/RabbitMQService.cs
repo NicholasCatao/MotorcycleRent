@@ -3,7 +3,7 @@ using RentMotorBike.Domain.Abstractions.Services;
 
 namespace RentMotorBike.Application.Services.Broker;
 
-public class RabbitMqService(IRabbitMQ rabbitMQ) : IRabbitMQService
-{
-    public async Task SendAsync<T>(T message) => await rabbitMQ.Send(message);
-}
+//public class RabbitMqService(IRabbitMQ rabbitMq) : IRabbitMQService
+//{
+//   // public async Task SendAsync<T>(T message) => await rabbitMq.Send(message);
+//}

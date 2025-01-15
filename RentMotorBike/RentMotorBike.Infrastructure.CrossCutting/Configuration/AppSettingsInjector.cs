@@ -20,10 +20,4 @@ public class AppSettingInjector
     public string? RabbitNotication { get; set; } = string.Empty;
 
     #endregion
-
-    #region S3 AWS
-    public string? EnderecoDiretorioS3 { get; set; } = string.Empty;
-    public string? EnderecoDiretorioS3Imagem { get; set; } = string.Empty;
-
-    #endregion
 }
