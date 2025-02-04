@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using RentMotorBike.Application.Services.Broker;
 using RentMotorBike.Application.Services.RentalPlan;
 using RentMotorBike.Application.Validators;
 using RentMotorBike.Domain.Abstractions.Services;
@@ -8,7 +7,7 @@ using System.Reflection;
 
 namespace RentMotorBike.Application;
 
-public static class Setup
+public static  class Setup
 {
     public static void ConfigureApplicationApp(this IServiceCollection services)
     {

@@ -1,6 +1,6 @@
 ﻿namespace RentMotorBike.Domain.Abstractions.Brokers;
 
-public interface IRabbitMQ
+public interface IRabbitMq
 {
-    Task Send<T>(T message, string queue);
+    Task SendAsync<T>(T message, string exchange, string queue, string routingKey, bool enablePubAck = true, bool enablePersistence = true);
 }
