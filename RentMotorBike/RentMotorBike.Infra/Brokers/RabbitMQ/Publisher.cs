@@ -8,7 +8,7 @@ namespace RentMotorBike.Infra.Brokers.RabbitMQ;
 public class Publisher(IModel model) : IRabbitMq
 {
     private const string TopicType = "TOPIC";
-
+    private const ushort TimeWaitingForPublishConfirmation = 10;
     /// <summary>
     /// Publish messages to Rabbit Server
     /// </summary>
@@ -60,6 +60,8 @@ public class Publisher(IModel model) : IRabbitMq
             routingKey: routingKey,
             body: body
         );
+
+        model.WaitForConfirmsOrDie(TimeSpan.FromSeconds(TimeWaitingForPublishConfirmation));
 
         return Task.CompletedTask;
     }

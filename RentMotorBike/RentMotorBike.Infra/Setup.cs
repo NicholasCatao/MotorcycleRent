@@ -7,6 +7,7 @@ using RentMotorBike.Domain.Abstractions.Repository;
 using RentMotorBike.Infra.Brokers.RabbitMQ;
 using RentMotorBike.Infra.Cache;
 using RentMotorBike.Infra.Data;
+using StackExchange.Redis;
 
 namespace RentMotorBike.Infra;
 
@@ -17,10 +18,7 @@ public static class Setup
         IConfiguration configuration
     )
     {
-        services
-            .AddRabbitMq(configuration)
-            .AddRepositories()
-            .AddCache(configuration);
+        services.AddRabbitMq(configuration).AddRepositories().AddCache(configuration);
     }
 
     public static IServiceCollection AddRabbitMq(
@@ -49,7 +47,6 @@ public static class Setup
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
@@ -59,12 +56,13 @@ public static class Setup
         IConfiguration configuration
     )
     {
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+            ConnectionMultiplexer.Connect(
+                configuration["Redis:Uri"] ?? throw new ArgumentNullException("Redis:Uri")
+            )
+        );
+
         services.AddTransient<IRepositoryCache, RepositoryCache>();
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration =
-                configuration["Redis:Uri"] ?? throw new ArgumentNullException("Redis:Uri");
-        });
 
         return services;
     }

@@ -2,20 +2,19 @@
 
 namespace RentMotorBike.Workers;
 
-public static class ServicesRegisterDI
+public static class ServicesRegisterDi
 {
-    public static void RegisterServices(IServiceCollection services)
+    public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
-      //  services.AddHostedService<MailWorker>();
+        services.AddHostedService<MailWorker>();
         services.AddHostedService<FileWorker>();
-
 
         services.AddSingleton(sp => new ConnectionFactory()
         {
-            Uri = new Uri($"amqp://WalkthroughUser:WalkthroughPassword@rabbitmqWalkthrough"),
-            //DispatchConsumersAsync = false,
+            Uri = new Uri(configuration[""] ?? throw new FileNotFoundException()),
+            DispatchConsumersAsync = false,
             ConsumerDispatchConcurrency = 1,
-            //UseBackgroundThreadsForIO = false
+            UseBackgroundThreadsForIO = false
         });
     }
 }

@@ -1,10 +1,10 @@
-﻿using StackExchange.Redis;
-using System.Text.Json;
+﻿using System.Text.Json;
 using RentMotorBike.Domain.Abstractions.Cache;
+using StackExchange.Redis;
 
 namespace RentMotorBike.Infra.Cache;
 
-public class RepositoryCache( IConnectionMultiplexer connectionMultiplexer) : IRepositoryCache
+public class RepositoryCache(IConnectionMultiplexer connectionMultiplexer) : IRepositoryCache
 {
     public async Task<T?> GetAsync<T>(string key, int dbNumber = 0)
     {
