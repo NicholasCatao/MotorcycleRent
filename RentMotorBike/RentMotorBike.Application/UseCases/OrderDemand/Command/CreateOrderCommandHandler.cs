@@ -32,10 +32,10 @@ public class CreateOrderCommandHandler(
 
             var id = await uow.Repository<Order>().InsertAsync(entity);
 
-            uow.Commit();
-
             var getPublishAckState = await cache.GetAsync<bool>(PublishAckKeyState);
             await rabbitMqService.SendAsync<int>(id, "exchange", "xxx", "yyy", enablePubAck:getPublishAckState); // TODO add notification
+
+            uow.Commit();
 
             return new Response<OrderCommandResponse>(
                 new OrderCommandResponse
