@@ -6,6 +6,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  
 
 stages:
 - stage: Build
@@ -27,11 +28,24 @@ stages:
           command: 'build'
           projects: '**/*.csproj'
           feedsToUse: 'select'
+          arguments: '--configuration $(BuildConfiguration)'
     - task: DotNetCoreCLI@2
       displayName: Publish
       inputs:
           command: 'publish'
           publishWebProjects: true
+    - task: CopyFiles@2
+      displayName: Copy Files
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+    - task: PublishBuildArtifacts@1
+      displayName: Artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
     - task: Docker@2
       displayName: Build an Docker image
       inputs:
