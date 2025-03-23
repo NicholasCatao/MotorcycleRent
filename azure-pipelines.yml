@@ -37,7 +37,7 @@ stages:
     - task: CopyFiles@2
       displayName: Copy Files
       inputs:
-        SourceFolder: '$(Build.SourcesDirectory'
+        SourceFolder: '$(Build.SourcesDirectory)'
         Contents: '**'
         TargetFolder: '$(build.artifactstagingdirectory)'
     - task: PublishBuildArtifacts@1
