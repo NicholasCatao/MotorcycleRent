@@ -56,6 +56,5 @@ stages:
       inputs:
         awsCredentials: 'AWS DEPLOY'
         regionName: 'us-east-1'
-        imageSource: 'imagename'
         sourceImageName: 'app$(Build.BuildId)'
         repositoryName: 'motor-rent-bike'
