@@ -49,9 +49,9 @@ stages:
         publishLocation: 'Container'
     - task: Docker@2
       inputs:
-        command: 'build'
-        Dockerfile: '**/Dockerfile'
-        tags: 'app$(Build.BuildId)'
+       command: 'buildAndPush'
+       Dockerfile: '**/Dockerfile'
+       tags: 'app$(Build.BuildId)'
     - task: ECRPushImage@1
       inputs:
         awsCredentials: 'AWS DEPLOY'
