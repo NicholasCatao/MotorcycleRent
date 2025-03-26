@@ -48,9 +48,14 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
     - task: Docker@2
-      displayName: Build an Docker image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/RentMotorBike/Dockerfile'
-        tags: |
-          $(tag)
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: 'app$(Build.BuildId)'
+    - task: ECRPushImage@1
+      inputs:
+        awsCredentials: 'AWS DEPLOY'
+        regionName: 'us-east-1'
+        imageSource: 'imagename'
+        sourceImageName: 'app$(Build.BuildId)'
+        repositoryName: 'motor-rent-bike'
